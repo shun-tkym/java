@@ -23,34 +23,32 @@ interface Iterator {
 }
 
 class GameListIterator implements Iterator {
-  private GameListAggregate aggregate;
-  private int current;
-  public GameListIterator(GameListAggregate aggregate) {
-    this.aggregate = aggregate;
-  }
-  @Override
-  public void first() {
-    current = 0;
-  }
-  @Override
-  デザインパターン入門
-  7 / 9
-  public void next() {
-    current += 1;
-  }
-  @Override
-  public boolean isDone() {
-    if (current >= aggregate.getNumberOfStock()) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-  @Override
-  public Object getItem() {
-    return aggregate.getAt(current);
-  }
+private GameListAggregate aggregate;
+private int current;
+public GameListIterator(GameListAggregate aggregate) {
+this.aggregate = aggregate;
+}
+@Override
+public void first() {
+current = 0;
+}
+@Override
+public void next() {
+current += 1;
+}
+@Override
+public boolean isDone() {
+if (current >= aggregate.getNumberOfStock()) {
+return true;
+}
+else {
+return false;
+}
+}
+@Override
+public Object getItem() {
+return aggregate.getAt(current);
+}
 }
 
 interface Aggregate {
@@ -58,22 +56,22 @@ interface Aggregate {
 }
 
 class GameListAggregate implements Aggregate {
-  private Game[] list; // ゲームソフトを格納する配列
-  private int numberOfStock; // 現在の在庫数
-  public GameList(int number) { // コンストラクタ
-  list = new Game[number]; // 配列の大きさを確定
-  numberOfStock = 0;
-  }
-  public void add(Game game) {
-  list[numberOfStock] = game; // 格納
-  numberOfStock += 1; // 在庫数を1 つ増加
-  }
-  public Game getGame(int number) { // 指定番号のゲームソフト取出し
-  return list[number];
-  }
-  public int getNumberOfStock() { // 現在の在庫数を取得
-  return numberOfStock;
-  }
+private Game[] list = new Game[20];
+private int numberOfStock;
+@Override
+public Iterator createIterator() {
+return new GameListIterator(this);
+}
+public void add(Game game) {
+list[numberOfStock] = game;
+numberOfStock += 1;
+}
+public Object getAt(int number) {
+return list[number];
+}
+public int getNumberOfStock() {
+return numberOfStock;
+}
 }
 
 class Game {
@@ -90,3 +88,4 @@ class Game {
     return price;
   }
 }
+
