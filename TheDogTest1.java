@@ -1,109 +1,117 @@
 public class TheDogTest1 {
-   public static void main(String[] args) {
-      Dog pochi = new Dog();
-        pochi.print();
+    public static void main(String[] args) {
+        Dog pochi = new Dog();
+        pochi.jyoutaiNani();
+
         pochi.roudou();
-        pochi.print();
+        pochi.jyoutaiNani();
+
         pochi.roudou();
-        pochi.print();
+        pochi.jyoutaiNani();
+
+        pochi.roudou();
+        pochi.jyoutaiNani();
+        
         pochi.shokuji();
-        pochi.print();
+        pochi.jyoutaiNani();
+
         pochi.shokuji();
-        pochi.print();
-      }
+        pochi.jyoutaiNani();
+
     }
+}
 
 class Dog {
-   private DogState myState;
-   public Dog() {
-      myState = TanoshiiState.getInstance();
+    private DogState myState;
+    public Dog() {
+        myState = TanoshiiState.getInstance();
     }
     public void roudou() {
-      myState.tukareta(this);
+        myState.tukareta(this);
     }
     public void shokuji() {
-      myState.tabeta(this);
+        myState.tabeta(this);
     }
     public void changeState(DogState d) {
-      myState = d;
+        myState = d;
     }
     public void jyoutaiNani() {
-      System.out.print("現在、わたしは「");
-      System.out.print( myState.toString() );
-      System.out.println("」です。");
+        System.out.print("現在、わたしは「");
+        System.out.print( myState.toString() );
+        System.out.println("」です。");
     }
-  }
+}
 
-  abstract class DogState {
+abstract class DogState {
     public abstract void tukareta(Dog yobidashimoto); //疲れた！
     public abstract void tabeta(Dog yobidashimoto); //食べた！
-  }
+}
 
 class TanoshiiState extends DogState {
-  private static TanoshiiState s = new TanoshiiState();
-  private TanoshiiState() {}
+    private static TanoshiiState s = new TanoshiiState();
+    private TanoshiiState() {}
 
-  public static DogState getInstance() {
-    return s;
-  }
-  public void tukareta(Dog moto) {
-    moto.changeState(FutsuuState.getInstance());
-  }
-  public void tabeta(Dog moto) {
-    // なにもしない
-  }
-    public String toString() {
-      return "楽しい状態";
+    public static DogState getInstance() {
+        return s;
     }
-  }
+    public void tukareta(Dog moto) {
+        moto.changeState(FutsuuState.getInstance());
+    }
+    public void tabeta(Dog moto) {
+        // なにもしない
+    }
+    public String toString() {
+        return "楽しい状態";
+    }
+}
 
-  class FutsuuState extends DogState {
+class FutsuuState extends DogState {
     private static FutsuuState s = new FutsuuState();
     private FutsuuState() {}
     public static DogState getInstance() {
-      return s;
+        return s;
     }
     public void tukareta(Dog moto) {
-      moto.changeState(IrairaState.getInstance());
+        moto.changeState(IrairaState.getInstance());
     }
     public void tabeta(Dog moto) {
-      moto.changeState(TanoshiiState.getInstance());
+        moto.changeState(TanoshiiState.getInstance());
     }
     public String toString() {
-      return "普通状態";
+        return "普通状態";
     }
-  }
+}
 
-  class IrairaState extends DogState {
+class IrairaState extends DogState {
     private static IrairaState s = new IrairaState();
     private IrairaState() {}
     public static DogState getInstance() {
-      return s;
+        return s;
     }
     public void tukareta(Dog moto) {
-      moto.changeState(ByoukiState.getInstance());
+        moto.changeState(ByoukiState.getInstance());
     }
     public void tabeta(Dog moto) {
-      moto.changeState(TanoshiiState.getInstance());
+        moto.changeState(TanoshiiState.getInstance());
     }
     public String toString() {
-      return "いらいら状態";
+        return "いらいら状態";
     }
-  }
+}
 
-  class ByoukiState extends DogState {
+class ByoukiState extends DogState {
     private static ByoukiState s = new ByoukiState();
     private ByoukiState() {}
     public static DogState getInstance() {
-      return s;
+        return s;
     }
     public void tukareta(Dog moto) {
-      moto.changeState(ByoukiState.getInstance());
+        moto.changeState(ByoukiState.getInstance());
     }
     public void tabeta(Dog moto) {
-      moto.changeState(FutsuuState.getInstance());
+        moto.changeState(FutsuuState.getInstance());
     }
     public String toString() {
-      return "病気状態";
+        return "病気状態";
     }
-  }
+}
